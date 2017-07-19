@@ -15,6 +15,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
 
     private var distanceLabel = UILabel()
+    private var trackingStateLabel = UILabel()
 
     private var startNode: SCNNode?
     private var endNode: SCNNode?
@@ -33,6 +34,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         distanceLabel.textColor = .red
         distanceLabel.frame = CGRect(x: 5, y: 5, width: 150, height: 25)
         view.addSubview(distanceLabel)
+
+        trackingStateLabel.frame = CGRect(x: 5, y: 35, width: 300, height: 25)
+        view.addSubview(trackingStateLabel)
 
         setupFocusSquare()
     }
@@ -131,6 +135,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async {
             self.updateFocusSquare()
+        }
+    }
+
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        switch camera.trackingState {
+        case .notAvailable:
+            trackingStateLabel.text = "Tracking not available"
+            trackingStateLabel.textColor = .red
+        case .normal:
+            trackingStateLabel.text = "Tracking normal"
+            trackingStateLabel.textColor = .green
+        case .limited(let reason):
+            switch reason {
+            case .excessiveMotion:
+                trackingStateLabel.text = "Tracking limited: excessive motion"
+            case .insufficientFeatures:
+                trackingStateLabel.text = "Tracking limited: insufficient features"
+            case .none:
+                trackingStateLabel.text = "Tracking limited"
+            case .initializing:
+                trackingStateLabel.text = "Tracking limited: initializing"
+            }
+            trackingStateLabel.textColor = .yellow
         }
     }
 
