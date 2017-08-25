@@ -44,7 +44,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Create a session configuration
-        let configuration = ARWorldTrackingSessionConfiguration()
+        let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         // Run the view's session
         sceneView.session.run(configuration)
@@ -152,8 +152,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 trackingStateLabel.text = "Tracking limited: excessive motion"
             case .insufficientFeatures:
                 trackingStateLabel.text = "Tracking limited: insufficient features"
-            case .none:
-                trackingStateLabel.text = "Tracking limited"
             case .initializing:
                 trackingStateLabel.text = "Tracking limited: initializing"
             }

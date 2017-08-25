@@ -156,7 +156,7 @@ class FocusSquare: SCNNode {
 		pulseOutAction.timingMode = .easeInEaseOut
 		pulseInAction.timingMode = .easeInEaseOut
 
-        guard let action = SCNAction.sequence([pulseOutAction, pulseInAction]) else { return nil }
+        let action = SCNAction.sequence([pulseOutAction, pulseInAction])
 		return SCNAction.repeatForever(action)
 	}
 	
@@ -243,35 +243,19 @@ class FocusSquare: SCNNode {
             let fadeInAction = SCNAction.fadeOpacity(to: 0.25, duration: animationDuration * 0.125)
             let fadeOutAction = SCNAction.fadeOpacity(to: 0.0, duration: animationDuration * 0.125)
 
-            if let action = SCNAction.sequence([waitAction, fadeInAction, fadeOutAction]) {
-                fillPlane?.runAction(action)
-            }
+            let actionFade = SCNAction.sequence([waitAction, fadeInAction, fadeOutAction])
+            fillPlane?.runAction(actionFade)
 			
 			let flashSquareAction = flashAnimation(duration: animationDuration * 0.25)
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[0].runAction(action)
-            }
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[1].runAction(action)
-            }
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[2].runAction(action)
-            }
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[3].runAction(action)
-            }
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[4].runAction(action)
-            }
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[5].runAction(action)
-            }
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[6].runAction(action)
-            }
-            if let action = SCNAction.sequence([waitAction, flashSquareAction]) {
-                segments?[7].runAction(action)
-            }
+            let action = SCNAction.sequence([waitAction, flashSquareAction])
+            segments?[0].runAction(action)
+            segments?[1].runAction(action)
+            segments?[2].runAction(action)
+            segments?[3].runAction(action)
+            segments?[4].runAction(action)
+            segments?[5].runAction(action)
+            segments?[6].runAction(action)
+            segments?[7].runAction(action)
 		}
 		
 		isOpen = false
